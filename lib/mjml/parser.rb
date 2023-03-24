@@ -38,8 +38,10 @@ module Mjml
     # rubocop:disable Style/OptionalBooleanParameter: Fixing this offense would imply a change in the public API.
     def run(in_tmp_file, beautify = true, minify = false, validation_level = 'strict')
       Tempfile.create(['out', '.html']) do |out_tmp_file|
-        command = "-r #{in_tmp_file} -o #{out_tmp_file.path} " \
-                  "--config.beautify #{beautify} --config.minify #{minify} --config.validationLevel #{validation_level}"
+        # command = "-r #{in_tmp_file} -o #{out_tmp_file.path} " \
+        #           "--config.beautify #{beautify} --config.minify #{minify} --config.validationLevel #{validation_level}"
+        # kohei
+        command = "#{in_tmp_file} render > #{out_tmp_file.path}"
         _, stderr, status = Mjml.run_mjml(command)
 
         unless status.success?
